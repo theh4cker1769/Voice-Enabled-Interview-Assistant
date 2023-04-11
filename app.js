@@ -1,7 +1,9 @@
 
 
 const btn = document.querySelector('.talk');
+const btn2 = document.querySelector('.talk2');
 const content = document.querySelector('.content');
+const content2 = document.querySelector('.content2');
 const texts = document.querySelector('.assistant');
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -77,12 +79,19 @@ function speakThis(message) {
         speech.text = Question;
         texts.innerText = Question;
 
-        recognition.onresult = (event) => {
+        const recognition2 = new SpeechRecognition();
+
+        recognition2.onresult = (event) => {
             const current = event.resultIndex;
             const transcript = event.results[current][0].transcript;
-            content.textContent = transcript;
+            content2.textContent = transcript;
             speakThisQuestion(transcript.toLowerCase());
         }
+
+        btn2.addEventListener('click', ()=>{
+            alert('hello')
+            recognition2.start();
+        })
         
         function speakThisQuestion(message) {
 
@@ -91,19 +100,15 @@ function speakThis(message) {
             speech.text = "I did not understand what you said please try again";
 
             if (message.includes('react')) {
-
+                const QuestionInter = "You got that right";
+                speech.text = QuestionInter;
+                texts.innerText = QuestionInter;
             }
         }
 
         
 
 
-    }
-
-    else if(message.includes('react')) {
-        const QuestionInter = "You got that right";
-        speech.text = QuestionInter;
-        texts.innerText = QuestionInter;
     }
 
     else {
